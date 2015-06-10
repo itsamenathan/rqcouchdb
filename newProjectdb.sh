@@ -38,25 +38,17 @@ cat << EOF | curl -X PUT https://$user:$pass@frcv.net/couch/$db/_design/auth --d
 }
 EOF
 
+cat << EOF | curl -i \
+                  -H "Content-Type:application/json" \
+                  -X POST \
+                  https://$user:$pass@frcv.net/couch/$db/_design/project \
+                  --data-binary @-
+{
+  "filters" : {
+    "by_name" : "function(doc, req) { if(doc.destination == req.query.name) { return true; } else { return false; }}"
+    }
+  }
+}
+EOF
 
-## setup for replication
-##
-#cat << EOF | curl -X PUT https://$user:$pass@frcv.net/couch/_replicator/rep_from_couch2 --data-binary @-
-#{
-#    "_id": "rep_from_couch",
-#    "source":  "https://frcv.net/couch2/$db",
-#    "target":  "https://$user:$pass@frcv.net/couch/$db",
-#    "create_target":  true,
-#    "continuous":  true
-#}
-#EOF
-#
-#cat << EOF | curl -X PUT https://$user:$pass@frcv.net/couch2/_replicator/rep_from_couch --data-binary @-
-#{
-#    "_id": "rep_from_couch",
-#    "source":  "https://frcv.net/couch/$db",
-#    "target":  "https://$user:$pass@frcv.net/couch2/$db",
-#    "create_target":  true,
-#    "continuous":  true
-#}
-#EOF
+

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-db='test'
+db='rqmessages'
 url='https://frcv.net/couch'
 
 since='now'

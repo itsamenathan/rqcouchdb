@@ -1,7 +1,7 @@
 #!/bin/bash
 
-user='redqueen'
-pass='bananahammock'
+user=''
+pass=''
 db='rqconfig'
 
 
